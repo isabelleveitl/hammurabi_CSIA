@@ -44,7 +44,12 @@ class City:
         return(self.price)
 
     def calculate_population(self):
-        pass
+        self.population = self.population + self.immigrants - self.death_by_illness
+
+        if self.death_by_starving > 0:
+            self.population - self.death_by_starving
+
+        return self.population
 
     def calculate_loss_by_rats(self,harvest):
         """"amount of grains """
@@ -130,3 +135,4 @@ city.calculate_harvest(5)
 city.calculate_stock(5)
 city.calculate_immigrants()
 city.sell_acres(-20)
+city.calculate_population()
