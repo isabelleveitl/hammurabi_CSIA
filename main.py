@@ -2,5 +2,7 @@ import controller as c
 import view as v
 import city as city
 
-ctrl = c.Controller(city.City(), v.View())
+_city = city.City()
+view = v.View(_city)
+ctrl = c.Controller(_city, view)
 ctrl.start()
