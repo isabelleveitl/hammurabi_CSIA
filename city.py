@@ -26,9 +26,8 @@ class City:
         self.gameover = gameover
 
     def calculate_year(self):
-        global year
-        year += 1
-        return year
+        self.year += 1
+        return self.year
 
     def price(self):
         """
@@ -41,34 +40,32 @@ class City:
     def calculate_population(self):
         pass
 
-    def calculate_loss_by_rats(self):
+    def calculate_loss_by_rats(self, harvest):
         """"amount of grains """
 
         random_probability = random.randrange(0, 101)
         random_amount = random.randrange(0, (harvest * 0.25))
         loss_by_rats = math.trunc(int(random_amount * (random_probability / 100)))
-        print(loss_by_rats)
+        return loss_by_rats
 
     def calculate_death_by_starving(self):
         """
         returns number of people who died from starving. minimum =0
         :return: int
         """
-        global death_by_starving
-
-        death_by_starving = math.trunc(int(city.population - (food / 20)))
+        death_by_starving = math.trunc(int(self.population - (food / 20)))
         if death_by_starving < 0:
             death_by_starving = 0
-        print(death_by_starving)
+        return death_by_starving
 
-    def calculate_death_by_illness(self):
+    def calculate_death_by_illness(self, death_by_starving):
         """ Number of people who die - max a 25% share of the current population"""
 
         random_probability = random.randrange(0, 101)
-        random_amount = random.randrange(0, ((self.population - death_by_starving) * 0.25))
+        random_amount = random.randrange(0, (int((self.population - death_by_starving) * 0.25)))
         death_by_illness = math.trunc(int(random_amount * (random_probability / 100)))
 
-        print(death_by_illness)
+        return death_by_illness
 
     def calculate_harvest(self):
         pass
@@ -101,6 +98,6 @@ class City:
 city = City()
 
 city.calculate_death_by_starving()
-city.calculate_death_by_illness()
-city.calculate_loss_by_rats()
+city.calculate_death_by_illness(1)
+city.calculate_loss_by_rats(200)
 
