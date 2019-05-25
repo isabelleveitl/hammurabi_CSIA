@@ -1,11 +1,12 @@
 #variables
 class City:
-    def __init__(self, population=100, city_name="Sumer", grain=1000, acres=100, year=0):
+    def __init__(self, population=100, city_name="Sumer", grain=1000, acres=100, year=0, gameover=False):
         self.population = population
         self.city_name = city_name
         self.grain = grain
         self.acres = acres
         self.year = year
+        self.gameover = gameover
 
 
 #business logic
