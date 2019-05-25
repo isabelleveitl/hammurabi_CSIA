@@ -3,12 +3,16 @@ class Controller:
         self.city = city
         self.view = view
         self.view.set_listener(self.update_city)
+        self.view.set_listener2(self.new_game)
 
     def start(self):
         self.view.show()
 
     def update_city(self, acres, food, plant):
         print('update city method with variables: ', acres, food, plant)
+
+    def new_game(self):
+        print('new game method')
 
 
 '''city = m.City()
@@ -23,6 +27,5 @@ print(city.year)'''
 
 
 
-def new_game():
-    print('new game method')
+
 
