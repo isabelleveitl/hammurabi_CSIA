@@ -30,6 +30,10 @@ class City:
         self.rats = rats
         self.bushel = bushel
         self.land_price = land_price
+        self.food = food
+        self.trade = trade
+        self.plant = plant
+        self.harvest = harvest
 
     def calculate_year(self):
         self.year += 1
@@ -59,7 +63,8 @@ class City:
         returns number of people who died from starving. minimum =0
         :return: int
         """
-        death_by_starving = math.trunc(int(self.population - (food / 20)))
+        death_by_starving = math.trunc(int(self.population - (self.food / 20)))
+        print(death_by_starving)
         if death_by_starving < 0:
             death_by_starving = 0
         return death_by_starving
@@ -68,7 +73,9 @@ class City:
         """ Number of people who die - max a 25% share of the current population"""
 
         random_probability = random.randrange(0, 101)
-        random_amount = random.randrange(0, (int((self.population - death_by_starving) * 0.25)))
+        random_amount = 0
+        if death_by_starving < self.population:
+            random_amount = random.randrange(0, (int((self.population - death_by_starving) * 0.25)))
         death_by_illness = math.trunc(int(random_amount * (random_probability / 100)))
 
         return death_by_illness
