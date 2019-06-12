@@ -8,8 +8,35 @@ class Controller:
     def start(self):
         self.view.show()
 
+    def game_over(self):
+        if self.city.year>=10:
+            self.city.gameover = True
+        elif (self.city.starved/self.city.population)>=0.45:
+            self.city.gameover = True
+        elif self.city.population==0:
+            self.city.gameover = True
+        else:
+            self.city.gameover = False
+
+
     def update_city(self, acres, food, plant):
-        print('update city method with variables: ', acres, food, plant)
+        self.city.calculate_loss_by_rats(500)#self.city.harvest)
+        self.city.calculate_death_by_starving()
+        self.city.calculate_death_by_illness(self.city.starved)
+        self.city.calculate_harvest()
+        self.city.workpower()
+        self.city.calculate_stock()
+        self.city.calculate_immigrants()
+        self.city.calculate_population()
+        self.city.sell_acres()
+        self.city.price()
+        self.city.calculate_year()
+        self.game_over()
+        if self.city.gameover == True:
+            print("Es ist vorbei")
+
+
+
 
     def new_game(self):
         print('new game method')
