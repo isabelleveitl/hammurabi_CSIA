@@ -1,0 +1,4 @@
+# Dont track this content
+venv/
+__pycache__/
+.idea/
