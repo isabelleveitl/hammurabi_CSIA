@@ -35,58 +35,83 @@ class City:
         self.year += 1
         return self.year
 
-    def price(self):
+    def calculate_price(self):
         """
         random price (grains) per year calculated between 17 & 26.
         :return: int
         """
-        price = random.randrange(17, 27)
-        return price
+        self.price = random.randrange(17, 27)
+        return(self.price)
 
     def calculate_population(self):
-        pass
+        self.population = self.population + self.immigrants - self.death_by_illness
 
-    def calculate_loss_by_rats(self, harvest):
+        if self.death_by_starving > 0:
+            self.population - self.death_by_starving
+
+        return self.population
+
+    def calculate_loss_by_rats(self,harvest):
         """"amount of grains """
 
         random_probability = random.randrange(0, 101)
         random_amount = random.randrange(0, (harvest * 0.25))
-        loss_by_rats = math.trunc(int(random_amount * (random_probability / 100)))
-        return loss_by_rats
+        self.loss_by_rats = math.trunc(int(random_amount * (random_probability / 100)))
+        return self.loss_by_rats
 
     def calculate_death_by_starving(self):
         """
         returns number of people who died from starving. minimum =0
         :return: int
         """
-        death_by_starving = math.trunc(int(self.population - (food / 20)))
-        if death_by_starving < 0:
-            death_by_starving = 0
-        return death_by_starving
+        self.death_by_starving = math.trunc(int(self.population - (food / 20)))
+        if self.death_by_starving < 0:
+            self.death_by_starving = 0
+        return self.death_by_starving
 
-    def calculate_death_by_illness(self, death_by_starving):
+    def calculate_death_by_illness(self):
         """ Number of people who die - max a 25% share of the current population"""
 
         random_probability = random.randrange(0, 101)
-        random_amount = random.randrange(0, (int((self.population - death_by_starving) * 0.25)))
-        death_by_illness = math.trunc(int(random_amount * (random_probability / 100)))
+        random_amount = random.randrange(0, (int((self.population - self.death_by_starving) * 0.25)))
+        self.death_by_illness = math.trunc(int(random_amount * (random_probability / 100)))
 
-        return death_by_illness
+        return self.death_by_illness
 
-    def calculate_harvest(self):
-        pass
 
-    def workpower(self):
-        pass
+    def workpower(self,food):
 
-    def calculate_stock(self):
-        pass
+        productivity = food /(self.population*20)
+        if productivity > 1:
+            productivity -= 1
+        self.workpower = self.population*productivity *10
+
+        return self.workpower
+
+    def calculate_harvest(self, plant):
+        random_crop = random.randrange(1,9)
+
+        if self.workpower < plant:
+            self.harvest = random_crop * plant
+        else:
+            self.harvest = random_crop * plant* self.workpower
+        return self.harvest
+
+    def calculate_stock(self,price):
+        self.stock = self.grain-food-plant-(trade*price)-self.loss_by_rats+self.harvest
+        return self.stock
 
     def calculate_immigrants(self):
-        pass
 
-    def sell_acres(self):
-        pass
+        if (self.stock/20) > self.population and self.workpower < self.acres:
+            self.immigrants = random.randrange(0, 10)
+        else:
+            self.immigrants = 0
+        return self.immigrants
+
+    def sell_acres(self, trade):
+        self.acres += trade
+        return self.acres
 
     def gameover(self):
         """ outputs true or false"""
@@ -98,12 +123,16 @@ class City:
 
 
 
-#business logic
-
+#funktionen ausführen - test
 
 city = City()
 
 city.calculate_death_by_starving()
-city.calculate_death_by_illness(1)
-city.calculate_loss_by_rats(200)
-
+city.calculate_death_by_illness()
+city.calculate_loss_by_rats(100)
+city.workpower(3000)
+city.calculate_harvest(5)
+city.calculate_stock(5)
+city.calculate_immigrants()
+city.sell_acres(-20)
+city.calculate_population()
