@@ -20,16 +20,16 @@ class Controller:
 
 
     def update_city(self, acres, food, plant):
-        self.city.calculate_loss_by_rats(500)#self.city.harvest)
+        self.city.calculate_price()
+        self.city.calculate_harvest(self.city.plant)
+        self.city.calculate_loss_by_rats(self.city.harvest)
         self.city.calculate_death_by_starving()
-        self.city.calculate_death_by_illness(self.city.starved)
-        self.city.calculate_harvest()
-        self.city.workpower()
-        self.city.calculate_stock()
+        self.city.calculate_death_by_illness()
+        self.city.calculate_workpower(self.city.food)
+        self.city.calculate_stock(self.city.land_price)
         self.city.calculate_immigrants()
         self.city.calculate_population()
-        self.city.sell_acres()
-        self.city.price()
+        self.city.sell_acres(self.city.trade)
         self.city.calculate_year()
         self.game_over()
         if self.city.gameover == True:
