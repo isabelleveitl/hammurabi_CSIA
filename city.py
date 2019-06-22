@@ -17,7 +17,7 @@ harvest = 500
 #variables
 
 class City:
-    def __init__(self, population=100, city_name="Sumer", grain=1000, acres=1000, year=0, gameover=False, starved = 0, immigrants = 5, bushel_per_acre = 5, rats = 0, bushel = 2800, land_price = 21):
+    def __init__(self, population=100, city_name="Sumer", grain=1000, acres=1000, year=0, gameover=False, starved = 0, immigrants = 5, bushel_per_acre = 5, rats = 0, bushel = 2800, land_price = 21, workpower = 0):
         self.population = population
         self.city_name = city_name
         self.grain = grain
@@ -34,6 +34,7 @@ class City:
         self.trade = trade
         self.plant = plant
         self.harvest = harvest
+        self.workpower = workpower
 
     def calculate_year(self):
         self.year += 1
@@ -44,8 +45,8 @@ class City:
         random price (grains) per year calculated between 17 & 26.
         :return: int
         """
-        self.price = random.randrange(17, 27)
-        return(self.price)
+        self.land_price = random.randrange(17, 27)
+        return(self.land_price)
 
     def calculate_population(self):
         self.population = self.population + self.immigrants - self.death_by_illness
@@ -59,7 +60,8 @@ class City:
         """"amount of grains """
 
         random_probability = random.randrange(0, 101)
-        random_amount = random.randrange(0, (harvest * 0.25))
+        random_amount_stop = int(((self.harvest * 0.25)+1))
+        random_amount = random.randrange(0, random_amount_stop)
         self.loss_by_rats = math.trunc(int(random_amount * (random_probability / 100)))
         return self.loss_by_rats
 
@@ -84,7 +86,7 @@ class City:
         return self.death_by_illness
 
 
-    def workpower(self,food):
+    def calculate_workpower(self,food):
 
         productivity = food /(self.population*20)
         if productivity > 1:
@@ -102,8 +104,8 @@ class City:
             self.harvest = random_crop * plant* self.workpower
         return self.harvest
 
-    def calculate_stock(self,price):
-        self.stock = self.grain-food-plant-(trade*price)-self.loss_by_rats+self.harvest
+    def calculate_stock(self, land_price):
+        self.stock = self.grain-food-plant-(trade*self.land_price)-self.loss_by_rats+self.harvest
         return self.stock
 
     def calculate_immigrants(self):
@@ -134,9 +136,11 @@ city = City()
 
 city.calculate_death_by_starving()
 city.calculate_death_by_illness()
-city.calculate_loss_by_rats(100)
-city.workpower(3000)
-city.calculate_harvest(5)
+city.calculate_harvest(500)
+print(city.harvest)
+city.calculate_loss_by_rats(city.harvest)
+print(city.loss_by_rats)
+city.calculate_workpower(3000)
 city.calculate_stock(5)
 city.calculate_immigrants()
 city.sell_acres(-20)
