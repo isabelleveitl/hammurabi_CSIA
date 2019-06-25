@@ -21,23 +21,19 @@ class Controller:
 
     def update_city(self, acres, food, plant):
 
-        self.city.calculate_price()
         self.city.calculate_year()
-
+        self.city.calculate_price()
         self.city.workpower(food)
-        # self.city.calculate_stock()
-        #self.city.calculate_immigrants(acres)
 
+        self.city.calculate_acres(acres)
+        self.city.calculate_harvest(plant)
+        self.city.calculate_loss_by_rats()
 
+        self.city.calculate_death_by_starving(food)
+        self.city.calculate_death_by_illness()
+
+        self.city.calculate_immigrants()
         self.city.calculate_population()
-
-        #harvest = self.city.calculate_harvest(plant)
-        #self.city.calculate_loss_by_rats(harvest)
-
-
-
-
-      #  self.city.sell_acres()
 
         self.game_over()
         self.view.setInfo()
@@ -46,20 +42,11 @@ class Controller:
 
 
 
-
     def new_game(self):
         print('new game method')
 
 
-'''city = m.City()
 
-print(city.population)
-print(city.city_name)
-print(city.grain)
-print(city.acres)
-print(city.year)'''
-
-##update model
 
 
 

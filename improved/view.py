@@ -36,14 +36,14 @@ class View:
     def setText(self):
         print(self.city.city_name)
         m = 2
-        introduction_text = 'In Year ' + str(self.city.year) + ', ' + str(self.city.starved) + ' people starved. \n' \
+        introduction_text = 'In Year ' + str(self.city.year) + ', ' + str(self.city.starved) + ' people starved. ' + str(self.city.death_by_illness) + ' people where ill. \n' \
                             + str(self.city.immigrants) + ' people came to the city. \n' \
-                            'The city population is now ' + str(self.city.population) + '. \n' \
-                            'The city now owns ' + str(self.city.acres) + ' acres.\n' \
-                            'You harvested ' + str(self.city.bushel_per_acre) + ' bushels per acre.\n' \
-                            'Rats ate ' + str(self.city.rats) + ' bushels.\n' \
-                            'You now have ' + str(self.city.bushel) + ' bushels in store.\n' \
-                            'Land is trading at ' + str( self.city.land_price) + ' bushels per acre.'
+                            'The city population is now ' + str(int(self.city.population)) + '. \n' \
+                            'The city now owns ' + str(int(self.city.acres)) + ' acres.\n' \
+                            'You harvested ' + str(int(self.city.harvest)) + ' bushels per acre.\n' \
+                            'Rats ate ' + str(int(self.city.loss_by_rats)) + ' bushels.\n' \
+                            'You now have ' + str(int(self.city.bushel)) + ' bushels in store.\n' \
+                            'Land is trading at ' + str(self.city.price) + ' bushels per acre.'
 
         return introduction_text
 
